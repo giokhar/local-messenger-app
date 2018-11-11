@@ -15,6 +15,29 @@
    <script type="text/javascript" src="static/js/elastic.min.js"></script>
    <script type="text/javascript" src="static/js/main.js"></script>
    <script type="text/javascript">
+      var socket = io.connect('http://' + document.domain + ':' + location.port);
+      socket.on( 'connect', function() {
+        socket.emit( 'my event', {
+          data: 'User Connected'
+        } )
+        var form = $( 'form' ).on( 'submit', function( e ) {
+          e.preventDefault()
+          let user_name = "Giorgi"
+          let user_input = $( '.reply' ).val()
+          socket.emit( 'my event', {
+            user_name : user_name,
+            message : user_input
+          } )
+          $( '.reply' ).val( '' ).focus()
+        } )
+      } )
+      socket.on( 'my response', function( msg ) {
+        console.log( msg )
+        if( typeof msg.user_name !== 'undefined' ) {
+          $( 'h3' ).remove()
+          $( 'div.messages-body' ).append( '<div class="msg"><div class="message-reply-body you_"><div class="message-text">'+msg.message+'</div><div class="message-time">10:11</div></div></div>' )
+        }
+      })
    </script>
 
 </head>
@@ -294,21 +317,23 @@
          </div>
          <!--Conversation FINISHED-->
          <!--Message Text Box STARTED-->
+         <form action="" method="POST">
          <div class="message-textbox">
             <div class="message-box">
                <!-- <div class="smile-button"></div> -->
-               <div class="reply-textBox">
-                  <textarea name="reply" class="reply" placeholder="Reply message..."></textarea>
-               </div>
-               <div class="reply-btn"></div>
+                  <div class="reply-textBox">
+                     <textarea name="reply" class="reply" placeholder="Reply message..."></textarea>
+                  </div>
+                  <button class="reply-btn" style="border: none"></button>
             </div>
          </div>
+         </form>
          <!--Message Text Box FINISHED-->
       </div>
    </div>
 
    <!--Panel DropDown menus STARTED-->
-   <div class="panel-dropdown-content" id="list-chat-send-message">
+<!--    <div class="panel-dropdown-content" id="list-chat-send-message">
       <div class="panel-item">
          <div class="panel-image"></div>
       </div>
@@ -333,7 +358,7 @@
       <div class="dropdown-control"><a href="#">Make a Favourite</a></div>
       <div class="dropdown-control"><a href="#">Clear Conversation</a></div>
       <div class="dropdown-control"><a href="#">Block User</a></div>
-   </div>
+   </div> -->
    <!--Panel DropDown Menus FINISHED-->
 </body>
 
