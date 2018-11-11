@@ -1,14 +1,14 @@
 from flask import Flask, request, render_template
 from flask_socketio import SocketIO
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 app.config['SECRET_KEY'] = 'Mnigkaifilwajit3g!'
 socketio = SocketIO(app)
 
 
 @app.route('/')
 def sessions():
-    return render_template('session.html')
+    return render_template('chat.html')
 
 def messageReceived(methods=['GET', 'POST']):
     print('message was received!!!')
