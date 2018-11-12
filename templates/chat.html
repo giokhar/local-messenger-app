@@ -33,7 +33,7 @@
       } )
       socket.on( 'my response', function( msg ) {
         console.log( msg )
-        if( typeof msg.user_name !== 'undefined' ) {
+        if( typeof msg.user_name !== 'undefined' && msg.message != '' ) {
           $( 'div.messages-body' ).append( '<div class="msg"><div class="message-reply-body you_"><div class="message-text">'+msg.message+'</div><div class="message-time">10:11</div></div></div>' )
           // Always scroll down when message sent
           $('.messages--wrap').scrollTop(Number.MAX_SAFE_INTEGER)
