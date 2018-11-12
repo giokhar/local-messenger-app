@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Login</title>
+<link rel="stylesheet" href="static/css/login_register.css">
+<link rel="stylesheet" href="static/css/animate.css">
+<script type="text/javascript">
+function show(e){
+  document.getElementById('name').innerHTML = e.value.toUpperCase() + " !";
+}
+</script>
+</head>
+
+<body>
+<div class="container style">
+    <div class="page_container style">
+         <div class="column_container left_column animation_one">
+               <div class="blue_bg"></div>
+               <div class="wellcome_text">
+                    <div class="wellcome animation_text">HELLO <div id="name"></div></div>
+                    <div class="wellcome_note animation_text">WE GIVE YOU AN OPPORTUNITY TO CHAT WITH PEOPLE NEARBY!</div> 
+               </div>
+               <div class="wellcome_footer animation_footer">
+                   Log in and see who is connected to the same wireless network.
+               </div>
+         </div>
+         <div class="column_container right_column animation_two">
+              <div class="form_middle">
+                  <div class="in" id="login_form">
+                        <div class="system_logo"><img src="static/assets/img/logo.png" /></div>
+                        <div class="login_note">Chat without internet access !</div>
+                        <div class="login_form">
+                           <form action="/chat">
+                             <div class="login_form_item"><input type="text" class="input_field" name="username" id="username" placeholder="Write your username!" onkeyup="show(this)"><div class="icon icons user_icon"></div></div>
+                             <div class="login_form_item"><input type="submit" class="button" value="Login" /></div>
+                           </form>
+                        </div>
+                  </div>
+              </div>
+         </div>
+    </div>
+</div>
+</body>
+</html>
