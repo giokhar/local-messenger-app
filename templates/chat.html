@@ -34,8 +34,9 @@
       socket.on( 'my response', function( msg ) {
         console.log( msg )
         if( typeof msg.user_name !== 'undefined' ) {
-          $( 'h3' ).remove()
           $( 'div.messages-body' ).append( '<div class="msg"><div class="message-reply-body you_"><div class="message-text">'+msg.message+'</div><div class="message-time">10:11</div></div></div>' )
+          // Always scroll down when message sent
+          $('.messages--wrap').scrollTop(Number.MAX_SAFE_INTEGER)
         }
       })
    </script>
@@ -296,7 +297,7 @@
          <!--Chat HEADER FINISHED-->
          <!--Conversation STARTED-->
          <div class="messages--wrap">
-            <div class="messages-body">
+            <div class="messages-body" id="messages-body">
                <!--Text Message STARTED-->
                <div class="msg">
                   <div class="message-reply-body friend">
@@ -322,9 +323,9 @@
             <div class="message-box">
                <!-- <div class="smile-button"></div> -->
                   <div class="reply-textBox">
-                     <textarea name="reply" class="reply" placeholder="Reply message..."></textarea>
+                     <input type="text" name="reply" id="reply" class="reply" placeholder="Reply message..." autofocus/>
                   </div>
-                  <button class="reply-btn" style="border: none"></button>
+                  <button class="reply-btn" type="submit" style="border: none"></button>
             </div>
          </div>
          </form>
