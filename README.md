@@ -1,7 +1,7 @@
 # local-messenger-app
 This is a messenger app for people within the same wireless network
 
-To run the project, you need to have python3 and pip installed.
+To run the project, you need to have python3 and pip3 installed.
 
 It is recommended to create virtual environment first by running `virtualenv -p {PYTHON PATH} {NAME}`
 
