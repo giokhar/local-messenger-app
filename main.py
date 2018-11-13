@@ -12,7 +12,8 @@ def login():
 
 @app.route('/chat')
 def chat():
-	return render_template('chat.html')
+	username = request.args['username']
+	return render_template('chat.html', username=username)
 
 def messageReceived(methods=['GET', 'POST']):
     print('message was received!!!')
