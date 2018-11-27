@@ -16,3 +16,8 @@ When the virtual environment is created, activate it using `source {NAME}/bin/ac
 After virtualenv is active, install all the dependencies of the project by running `pip3 install -r requirements.txt`
 
 Run the project using `python3 main.py` and enjoy chat with your friends.
+
+
+
+# 1. List all the users on the current wireless network (Updated list on the website using sockets)
+# 2. Send the messages with the CSMA/CA
