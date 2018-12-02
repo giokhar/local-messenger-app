@@ -1,7 +1,7 @@
 import socket
  
-host = '127.0.0.1'
-port = 50009
+host = socket.gethostname()
+port = 50010
  
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((host, port))
@@ -17,3 +17,12 @@ while True:
 	 break
 	s.sendall(response.encode('utf-8'))
 s.close()
+
+# def get_free_tcp_port():
+#     tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+#     tcp.bind(('', 0))
+#     addr, port = tcp.getsockname()
+#     tcp.close()
+#     return port
+
+# def send_message(ip_to_send, port = 50009,  )
