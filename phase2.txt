@@ -10,7 +10,7 @@ In this project, we have 5 major modules: Connection setup, Sending a message, R
 1. Connection Setup
 * Each new device that runs the code scans over all the IP addresses available on the current network.
 * It uses broadcasting and sends a connection request to all the IP addresses and keeps track of those if a positive acknowledgement is sent back.
-* Connection request consists of sending its name to everyone available on network and acknoledgement has connected devices' names itself.
+* Connection request consists of sending its name to everyone available on network and acknowledgement has connected devices' names itself.
 
 =================================================================================================================================
 * For sending and receiving a message we decided to use python "sockets" library utilizing TCP protocol. The reason for this is that sending text messages will be more reliable on a connection-oriented service. However, It would need n*(n-1)/2 connections in total to operate within n users.
