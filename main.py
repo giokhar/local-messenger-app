@@ -21,11 +21,12 @@ def chat():
 @app.route('/message')
 def message():
 	ip = "192.168.1.1" # take the last digit of IP address as an id, e.g id=1
-	socketio.emit('message_received', {"id":request.args['id'],"text":request.args['text']})
+	data = {"id":request.args['id'],"text":request.args['text']}
+	socketio.emit('message_received', data)
 	return "MESSAGE WAS SENT FROM "+ request.args['id']
 
-@app.route('/friend')
-def friend():
+@app.route('/join')
+def join():
 	# send user icon if you have enough time
 	# When sending username check if that username already exists
 	ip = "192.168.1.1" # take the last digit of IP address as an id
@@ -33,10 +34,22 @@ def friend():
 	socketio.emit('user_joined', data)
 	return "NEW USER HAS JOINED THE NETWORK"
 
-@socketio.on('my_event')
-def handle_my_custom_event(json, methods=['GET', 'POST']):
-    print(str(json)) # json object containing receiver's id (or ip) and the text
-    socketio.emit('message_sent', json)
+@app.route('/rejoin')
+def rejoin():
+	data = {"id": request.args['id']}
+	socketio.emit('user_rejoined', data)
+	return "USER Rejoined"
+
+@app.route('/leave')
+def leave():
+	data = {"id": request.args['id']}
+	socketio.emit('user_left', data)
+	return "USER LEFT"
+
+@socketio.on('my_event') # invoked when user sends a message
+def handle_my_custom_event(data, methods=['GET', 'POST']):
+    print(str(data)) # json object containing receiver's id (or ip) and the text
+    socketio.emit('message_sent', data)
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)

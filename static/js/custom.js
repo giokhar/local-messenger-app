@@ -56,6 +56,16 @@ socket.on( 'user_joined', function( data ) {
   $("#"+data.id).find('.recent-user-message').css("font-weight", "700"); // bold the opened message
 });
 
+// When user rejoins show again in the panel
+socket.on( 'user_rejoined', function( data ) {
+  $("#"+data.id).show();
+});
+
+// When user leaves hide from the panel
+socket.on( 'user_left', function( data ) {
+  $("#"+data.id).hide();
+});
+
 // When click username it will open the appropriate chatbox
 $(document).on('click', 'div.recent-user', function()
 {
