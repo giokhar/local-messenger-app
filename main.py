@@ -2,7 +2,7 @@ from flask import Flask, request, render_template
 from flask_socketio import SocketIO
 
 app = Flask(__name__, static_url_path='/static')
-app.config['SECRET_KEY'] = 'Mnigkaifilwajit3g!'
+app.config['SECRET_KEY'] = 'NO_SECRET_KEY'
 socketio = SocketIO(app)
 
 
