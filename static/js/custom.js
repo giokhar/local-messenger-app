@@ -44,4 +44,6 @@ $(document).on('click', 'div.recent-user', function()
 {
   $('div.messages-body').show();
   $('div.messages-body').not("#messages-body-"+$(this).attr('id')).hide();
+  $('div.panel-username').text($(this).find('.recent-user-name').text());
+  $('div.panel-chat-avatar img').attr('src', $(this).find('.recent-avatar img').attr('src'));
 });
