@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect, url_for
 from flask_socketio import SocketIO
 
 app = Flask(__name__, static_url_path='/static')
@@ -10,10 +10,15 @@ socketio = SocketIO(app)
 def login():
     return render_template('login.html')
 
-@app.route('/chat')
+@app.route('/chat', methods=['GET', "POST"])
 def chat():
-	username = request.args['username']
+	username = request.form['username'] # get the username from the POST form
 	return render_template('chat.html', username=username)
+
+@app.route('/logout')
+def logout():
+	# send the server that you left and redirect to the url
+	return redirect(url_for('login'))
 
 
 # CUSTOM ROUTES TO TEST FRONT-END WITHOUT BACK-END
