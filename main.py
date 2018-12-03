@@ -33,9 +33,9 @@ def friend():
 	socketio.emit('user_joined', data)
 	return "NEW USER HAS JOINED THE NETWORK"
 
-@socketio.on('my event')
+@socketio.on('my_event')
 def handle_my_custom_event(json, methods=['GET', 'POST']):
-    print('received my event: ' + str(json))
+    print(str(json)) # json object containing receiver's id (or ip) and the text
     socketio.emit('message_sent', json)
 
 if __name__ == '__main__':
