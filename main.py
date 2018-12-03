@@ -15,23 +15,25 @@ def chat():
 	username = request.args['username']
 	return render_template('chat.html', username=username)
 
+
+# CUSTOM ROUTES TO TEST FRONT-END WITHOUT BACK-END
+
+@app.route('/message')
+def message():
+	socketio.emit('my response', {"from":request.args['from'],"text":request.args['message']}, callback=messageReceived)
+	return "MESSAGE WAS SENT FROM "+ request.args['from']
+
 @app.route('/friend')
 def friend():
-	socketio.emit('my response', {"friend_message":request.args['message']}, callback=messageReceived)
-	return "Hi"
-
-@app.route('/newUser')
-def newUser():
-	socketio.emit('my response', {"new_user":request.args['new_user']}, callback=messageReceived)
-	return "Sagol"
-
-def messageReceived(methods=['GET', 'POST']):
-    print('message was received!!!')
+	# When sending username check if that username already exists
+	data = {"username": request.args['username'], "ip": "192.168.1.1"}
+	socketio.emit('user_joined', data)
+	return "NEW USER HAS JOINED THE NETWORK"
 
 @socketio.on('my event')
 def handle_my_custom_event(json, methods=['GET', 'POST']):
     print('received my event: ' + str(json))
-    socketio.emit('my response', json, callback=messageReceived)
+    socketio.emit('my response', json)
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)
