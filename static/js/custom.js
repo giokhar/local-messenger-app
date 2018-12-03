@@ -40,15 +40,15 @@ socket.on( 'user_joined', function( data ) {
 $(document).ready(function(){
 $('div.messages-body').hide();
 });
-// When click usernames open appropriate chats
+// When click username it will open the appropriate chatbox
 $(document).on('click', 'div.recent-user', function()
 {
-  $('div.messages-body').show();
+  $('div.messages-body').show(700);
   $('div.message-textbox').show();
   $( '.reply' ).val( '' ).focus();
   $('div.messages-body').not("#messages-body-"+$(this).attr('id')).hide();
   $("div.recent-user").css("background-color", "#31ACF3")
   $(this).css("background-color","#0087D5");
   $('div.panel-username').text($(this).find('.recent-user-name').text());
-  $('div.panel-chat-avatar img').attr('src', $(this).find('.recent-avatar img').attr('src'));
+  $('div.panel-chat-avatar img').attr('src', $(this).find('.recent-avatar img').attr('src')).hide().show(500);
 });
