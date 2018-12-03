@@ -31,6 +31,17 @@ socket.on( 'my response', function( data ) {
   $('.messages--wrap').scrollTop(Number.MAX_SAFE_INTEGER)
 });
 
+// When user joins it add to the panel on the left
 socket.on( 'user_joined', function( data ) {
   $( 'div.panel-col' ).append( '<div class="recent-user" id="'+data.ip+'"><div class="recent-avatar"><img src="static/img/2.jpg" class="a0uk"></div><div class="chat-name-recent-message"><div class="recent-user-name">'+data.username+'</div><div class="recent-user-message">No messages yet...</div></div><div class="message-count"></div></div>' )
+});
+
+// On click users to see tabs
+$(document).ready(function(){
+$('div.messages-body').hide();
+});
+$(document).on('click', 'div.recent-user', function()
+{
+  $('div.messages-body').show();
+  $('div.messages-body').not("#messages-body-"+$(this).attr('id')).hide();
 });
