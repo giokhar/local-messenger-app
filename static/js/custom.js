@@ -12,11 +12,10 @@ function messageTime(){
 
 socket.on( 'connect', function() {
   var form = $( 'form' ).on( 'submit', function( e ) { // when user sends a message invoke socketio for back-end
-    e.preventDefault()
-    let id = $('.reply').attr('id').replace("reply-", ""); // get the 'id' from 'reply-id'
+    e.preventDefault();
     socket.emit( 'my_event', {
-      id : id,
-      text : user_input
+      id : $('.reply').attr('id').replace("reply-", ""), // get the 'id' from 'reply-id'
+      text : $( '.reply' ).val(); // get the text typed by the user
     })
   })
 });
