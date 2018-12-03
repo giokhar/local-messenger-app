@@ -15,6 +15,11 @@ def chat():
 	username = request.args['username']
 	return render_template('chat.html', username=username)
 
+@app.route('/friend')
+def friend():
+	socketio.emit('my response', {"friend_message":request.args['message']}, callback=messageReceived)
+	return "Hi"
+
 def messageReceived(methods=['GET', 'POST']):
     print('message was received!!!')
 
