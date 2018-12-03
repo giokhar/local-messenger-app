@@ -22,13 +22,10 @@ socket.on( 'connect', function() {
   } )
 } );
 
-socket.on( 'my response', function( data ) {
+socket.on( 'my_response', function( data ) {
   console.log( data )
   if (data.my_message !== undefined) {
     $( 'div.messages-body' ).append( '<div class="data"><div class="message-reply-body you_"><div class="message-text">'+data.my_message+'</div><div class="message-time">'+time+'</div></div></div>' )
-  }
-  if (data.friend_message !== undefined){
-    $( 'div.messages-body' ).append( '<div class="data"><div class="message-reply-body friend"><div class="message-text">'+data.friend_message+'</div><div class="message-time">'+time+'</div></div></div>' )
   }
   // Always scroll down when message sent
   $('.messages--wrap').scrollTop(Number.MAX_SAFE_INTEGER)
@@ -71,4 +68,5 @@ $(document).on('click', 'div.recent-user', function()
   $(this).find('.recent-user-message').css("font-weight", "100");
   $('div.panel-username').text($(this).find('.recent-user-name').text());
   $('div.panel-chat-avatar img').attr('src', $(this).find('.recent-avatar img').attr('src')).hide().show(500);
+  $('.messages--wrap').scrollTop(Number.MAX_SAFE_INTEGER)
 });
