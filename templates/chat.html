@@ -70,19 +70,17 @@
          <!--Panel Tab menu FINISHED-->
          <!--Panel Tabs STARTED-->
          <div class="panel-col">
-               <a href="/chat?username={{ username }}&person=1">
-                  <div class="recent-user">
-                     <!-- <div class="status"></div> -->
-                     <div class="recent-avatar"><img src="static/img/1.jpg" class="a0uk" /></div>
-                     <div class="chat-name-recent-message">
-                        <div class="recent-user-name">Asuman</div>
-                        <div class="recent-user-message">Are you still on there</div>
-                     </div>
-                     <div class="message-count">
-                        <div class="count">9+</div>
-                     </div>
+               <div class="recent-user" id="192.168.1.1">
+                  <!-- <div class="status"></div> -->
+                  <div class="recent-avatar"><img src="static/img/1.jpg" class="a0uk" /></div>
+                  <div class="chat-name-recent-message">
+                     <div class="recent-user-name">Asuman</div>
+                     <div class="recent-user-message">Are you still on there</div>
                   </div>
-               </a>
+                  <div class="message-count">
+                     <div class="count">9+</div>
+                  </div>
+               </div>
                <div class="recent-user">
                   <!-- <div class="status-offline"></div> -->
                   <div class="recent-avatar"><img src="static/img/2.jpg" class="a0uk" /></div>
@@ -273,7 +271,26 @@
          <!--Chat HEADER FINISHED-->
          <!--Conversation STARTED-->
          <div class="messages--wrap">
-            <div class="messages-body" id="messages-body">
+            <div class="messages-body" id="messages-body-192.168.1.1">
+               <!--Text Message STARTED-->
+               <div class="msg">
+                  <div class="message-reply-body friend">
+                     <div class="message-text">Hi, Mustafa how are you?</div>
+                     <div class="message-time">10:11</div>
+                  </div>
+               </div>
+               <!--Text Message FINISHED-->
+               <!--Text Message STARTED-->
+               <div class="msg">
+                  <div class="message-reply-body you_">
+                     <div class="message-text">Hi i am good how are you too ?</div>
+                     <div class="message-time">10:11</div>
+                  </div>
+               </div>
+               <!--Text Message FINISHED-->
+            </div>
+
+            <div class="messages-body" id="messages-body-192.168.1.2" style="display: hidden;">
                <!--Text Message STARTED-->
                <div class="msg">
                   <div class="message-reply-body friend">
