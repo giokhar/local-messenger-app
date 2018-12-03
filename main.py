@@ -20,11 +20,13 @@ def chat():
 
 @app.route('/message')
 def message():
-	socketio.emit('my response', {"from":request.args['from'],"text":request.args['message']}, callback=messageReceived)
-	return "MESSAGE WAS SENT FROM "+ request.args['from']
+	ip = "192.168.1.1" # take the last digit of IP address as an id, e.g id=1
+	socketio.emit('message_received', {"id":request.args['id'],"text":request.args['text']})
+	return "MESSAGE WAS SENT FROM "+ request.args['id']
 
 @app.route('/friend')
 def friend():
+	# send user icon if you have enough time
 	# When sending username check if that username already exists
 	ip = "192.168.1.1" # take the last digit of IP address as an id
 	data = {"username": request.args['username'], "id": request.args['id']}

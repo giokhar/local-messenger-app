@@ -1,6 +1,11 @@
 var url = 'http://' + document.domain + ':' + location.port;
 var socket = io.connect(url);
 
+function messageTime(){
+  // Function that returns the time message was received
+  return new Date().getHours() + ":" + ('0'+new Date().getMinutes()).slice(-2);
+}
+
 
 socket.on( 'connect', function() {
   socket.emit( 'my event', {
@@ -19,7 +24,6 @@ socket.on( 'connect', function() {
 
 socket.on( 'my response', function( data ) {
   console.log( data )
-  let time = new Date().getHours() + ":" + ('0'+new Date().getMinutes()).slice(-2);
   if (data.my_message !== undefined) {
     $( 'div.messages-body' ).append( '<div class="data"><div class="message-reply-body you_"><div class="message-text">'+data.my_message+'</div><div class="message-time">'+time+'</div></div></div>' )
   }
@@ -36,9 +40,23 @@ socket.on( 'user_joined', function( data ) {
   $( 'div.messages--wrap').append( $('<div class="messages-body" id="messages-body-'+data.id+'"></div>').hide())
 });
 
+// When user sends you a message
+socket.on( 'message_received', function( data ) {
+  $( 'div#messages-body-'+data.id).append( '<div class="msg"><div class="message-reply-body friend"><div class="message-text">'+data.text+'</div><div class="message-time">'+messageTime()+'</div></div></div>' );
+  $("#"+data.id).find('.recent-user-message').text(data.text).css("font-weight", "700");
+  $("#"+data.id).find('.recent-user-name').css("font-weight", "700");
+  let user_info = $("#"+data.id);
+  $("#"+data.id).remove();
+  $( 'div.panel-col' ).prepend(user_info.show(300));
+  if ($("#"+data.id).find(".message-count").length){
+    let count = $("#"+data.id).find('.count');
+    count.text(parseInt(count.text())+1);
+  } else { $("#"+data.id).append('<div class="message-count"><div class="count">1</div></div>');}
+});
+
 
 $(document).ready(function(){
-$('div.messages-body').hide();
+$('div.messages-body').hide(); // When page loads, hide body of every chat
 });
 // When click username it will open the appropriate chatbox
 $(document).on('click', 'div.recent-user', function()
@@ -49,6 +67,8 @@ $(document).on('click', 'div.recent-user', function()
   $('div.messages-body').not("#messages-body-"+$(this).attr('id')).hide();
   $("div.recent-user").css("background-color", "#31ACF3")
   $(this).css("background-color","#0087D5");
+  $(this).find('.recent-user-name').css("font-weight", "100");
+  $(this).find('.recent-user-message').css("font-weight", "100");
   $('div.panel-username').text($(this).find('.recent-user-name').text());
   $('div.panel-chat-avatar img').attr('src', $(this).find('.recent-avatar img').attr('src')).hide().show(500);
 });
