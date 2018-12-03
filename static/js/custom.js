@@ -20,7 +20,7 @@ socket.on( 'connect', function() {
 
 socket.on( 'my response', function( msg ) {
   console.log( msg )
-  let time = new Date().getHours() + ":" + new Date().getMinutes();
+  let time = new Date().getHours() + ":" + ('0'+new Date().getMinutes()).slice(-2);
   if (msg.my_message) {
     $( 'div.messages-body' ).append( '<div class="msg"><div class="message-reply-body you_"><div class="message-text">'+msg.my_message+'</div><div class="message-time">'+time+'</div></div></div>' )
   }
