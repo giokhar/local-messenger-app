@@ -8,28 +8,17 @@ function messageTime(){
 
 
 socket.on( 'connect', function() {
-  socket.emit( 'my event', {
-    data: 'User Connected'
-  } )
+
   var form = $( 'form' ).on( 'submit', function( e ) {
     e.preventDefault()
-    let user_name = location.search.split('username=')[1];
+    let id = $('.reply').attr('id').replace("reply-", "");
     let user_input = $( '.reply' ).val()
     socket.emit( 'my event', {
-      user_name : user_name,
-      my_message : user_input
+      id : id,
+      text : user_input
     } )
   } )
 } );
-
-socket.on( 'my_response', function( data ) {
-  console.log( data )
-  if (data.my_message !== undefined) {
-    $( 'div.messages-body' ).append( '<div class="data"><div class="message-reply-body you_"><div class="message-text">'+data.my_message+'</div><div class="message-time">'+time+'</div></div></div>' )
-  }
-  // Always scroll down when message sent
-  $('.messages--wrap').scrollTop(Number.MAX_SAFE_INTEGER)
-});
 
 // When user joins it add to the panel on the left
 socket.on( 'user_joined', function( data ) {
@@ -40,8 +29,10 @@ socket.on( 'user_joined', function( data ) {
 // When user sends you a message
 socket.on( 'message_received', function( data ) {
   $( 'div#messages-body-'+data.id).append( '<div class="msg"><div class="message-reply-body friend"><div class="message-text">'+data.text+'</div><div class="message-time">'+messageTime()+'</div></div></div>' );
-  $("#"+data.id).find('.recent-user-message').text(data.text).css("font-weight", "700");
-  $("#"+data.id).find('.recent-user-name').css("font-weight", "700");
+  if ($("#"+data.id).css("background-color") != "rgb(0, 135, 213)"){ // If the tab is currently active don't make messages bold
+    $("#"+data.id).find('.recent-user-message').text(data.text).css("font-weight", "700");
+    $("#"+data.id).find('.recent-user-name').css("font-weight", "700");
+  }
   let user_info = $("#"+data.id);
   $("#"+data.id).remove();
   $( 'div.panel-col' ).prepend(user_info.show(300));
@@ -49,6 +40,14 @@ socket.on( 'message_received', function( data ) {
     let count = $("#"+data.id).find('.count');
     count.text(parseInt(count.text())+1);
   } else { $("#"+data.id).append('<div class="message-count"><div class="count">1</div></div>');}
+  $('.messages--wrap').scrollTop(Number.MAX_SAFE_INTEGER) // Always scroll down when message sent
+});
+
+socket.on( 'message_sent', function( data ) {
+  console.log( data )
+  $( 'div#messages-body-'+data.id).append( '<div class="data"><div class="message-reply-body you_"><div class="message-text">'+data.text+'</div><div class="message-time">'+messageTime()+'</div></div></div>' )
+  $('.reply').val(''); // Reset the textbox after sending a message
+  $('.messages--wrap').scrollTop(Number.MAX_SAFE_INTEGER) // Always scroll down when message sent
 });
 
 
@@ -61,6 +60,7 @@ $(document).on('click', 'div.recent-user', function()
   $('div.messages-body').show(700);
   $('div.message-textbox').show();
   $( '.reply' ).val( '' ).focus();
+  $( '.reply' ).attr('id', 'reply-'+$(this).attr('id'));
   $('div.messages-body').not("#messages-body-"+$(this).attr('id')).hide();
   $("div.recent-user").css("background-color", "#31ACF3")
   $(this).css("background-color","#0087D5");
@@ -68,5 +68,5 @@ $(document).on('click', 'div.recent-user', function()
   $(this).find('.recent-user-message').css("font-weight", "100");
   $('div.panel-username').text($(this).find('.recent-user-name').text());
   $('div.panel-chat-avatar img').attr('src', $(this).find('.recent-avatar img').attr('src')).hide().show(500);
-  $('.messages--wrap').scrollTop(Number.MAX_SAFE_INTEGER)
+  $('.messages--wrap').scrollTop(Number.MAX_SAFE_INTEGER) // Always scroll down when message sent
 });
