@@ -26,7 +26,8 @@ def message():
 @app.route('/friend')
 def friend():
 	# When sending username check if that username already exists
-	data = {"username": request.args['username'], "ip": "192.168.1.1"}
+	ip = "192.168.1.1" # take the last digit of IP address as an id
+	data = {"username": request.args['username'], "id": request.args['id']}
 	socketio.emit('user_joined', data)
 	return "NEW USER HAS JOINED THE NETWORK"
 

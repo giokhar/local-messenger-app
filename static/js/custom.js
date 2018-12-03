@@ -14,7 +14,6 @@ socket.on( 'connect', function() {
       user_name : user_name,
       my_message : user_input
     } )
-    $( '.reply' ).val( '' ).focus()
   } )
 } );
 
@@ -33,17 +32,23 @@ socket.on( 'my response', function( data ) {
 
 // When user joins it add to the panel on the left
 socket.on( 'user_joined', function( data ) {
-  $( 'div.panel-col' ).append( '<div class="recent-user" id="'+data.ip+'"><div class="recent-avatar"><img src="static/img/2.jpg" class="a0uk"></div><div class="chat-name-recent-message"><div class="recent-user-name">'+data.username+'</div><div class="recent-user-message">No messages yet...</div></div><div class="message-count"></div></div>' )
+  $( 'div.panel-col' ).append( '<div class="recent-user" id="'+data.id+'"><div class="recent-avatar"><img src="static/img/2.jpg" class="a0uk"></div><div class="chat-name-recent-message"><div class="recent-user-name">'+data.username+'</div><div class="recent-user-message">No messages yet...</div></div><div class="message-count"></div></div>' )
+  $( 'div.messages--wrap').append( $('<div class="messages-body" id="messages-body-'+data.id+'"></div>').hide())
 });
 
-// On click users to see tabs
+
 $(document).ready(function(){
 $('div.messages-body').hide();
 });
+// When click usernames open appropriate chats
 $(document).on('click', 'div.recent-user', function()
 {
   $('div.messages-body').show();
+  $('div.message-textbox').show();
+  $( '.reply' ).val( '' ).focus();
   $('div.messages-body').not("#messages-body-"+$(this).attr('id')).hide();
+  $("div.recent-user").css("background-color", "#31ACF3")
+  $(this).css("background-color","#0087D5");
   $('div.panel-username').text($(this).find('.recent-user-name').text());
   $('div.panel-chat-avatar img').attr('src', $(this).find('.recent-avatar img').attr('src'));
 });
