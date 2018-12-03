@@ -20,6 +20,11 @@ def friend():
 	socketio.emit('my response', {"friend_message":request.args['message']}, callback=messageReceived)
 	return "Hi"
 
+@app.route('/newUser')
+def newUser():
+	socketio.emit('my response', {"new_user":request.args['new_user']}, callback=messageReceived)
+	return "Sagol"
+
 def messageReceived(methods=['GET', 'POST']):
     print('message was received!!!')
 
