@@ -5,7 +5,7 @@ def create_socket(host, user, port=50010): # creates sockets if connection is po
 	new_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # create an empty socket
 	new_socket.settimeout(0.2) # if connection takes more than 0.2 seconds do not connect
 	new_socket.connect((host, port)) # connect using this type (host, port) tuple
-	new_socket.send(user.encode('utf-8'))
+	new_socket.sendall(user.encode('utf-8'))
 	new_socket.settimeout(None)
 	return new_socket # e.g. <socket>
 

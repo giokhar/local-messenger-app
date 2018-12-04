@@ -26,7 +26,6 @@ def listener(socketio, port=50010):
 		new_socket, addr = server_socket.accept()
 		print ("Connection from", addr)
 		user = new_socket.recv(1024).decode('utf-8')
-		print("Username:",user) # possible username
 		data = {"username": user, "id": get_id(addr[0])}
 		socketio.emit('user_joined', data)
 		#A thread shuts down itself after handling new client.
