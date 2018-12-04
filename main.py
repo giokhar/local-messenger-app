@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, redirect, url_for
 from flask_socketio import SocketIO
-from networking.post import send_message
+from networking.post import send_message,connected_sockets
 from networking.get import listener
 from networking.helper import get_ip_no_id
 import threading
@@ -17,6 +17,7 @@ def login():
 @app.route('/chat', methods=['GET', "POST"])
 def chat():
 	username = request.form['username'] # get the username from the POST form
+	print(connected_sockets(username)) # print connected_sockets and pass username to all the devices
 	return render_template('chat.html', username=username)
 
 @app.route('/logout')
@@ -60,8 +61,9 @@ def handle_my_custom_event(data, methods=['GET', 'POST']):
     print(str(data)) # json object containing receiver's id (or ip) and the text
     socketio.emit('message_sent', data)
     host = get_ip_no_id() + "." + str(data['id']) # get hosts ip from id coming from the browser
+    username = data['user'] # get my username from front-end
     message = data['text'] # get the message from the browser
-    send_message(host, message) # networking.send_message
+    send_message(host, username, message) # networking.send_message
 
 if __name__ == '__main__':
 	run_app_thread = threading.Thread(target = socketio.run, args = (app,))

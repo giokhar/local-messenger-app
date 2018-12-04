@@ -1,6 +1,6 @@
 import socket
 import threading
-from networking.helper import get_my_ip
+from networking.helper import get_my_ip, get_id
 
 def handle_new_client(conn, addr):
 	while True:
@@ -23,8 +23,10 @@ def listener(socketio, port=50010):
 	server_socket.listen(6)
 
 	while True:
-		conn, addr = server_socket.accept()
-		print ("Connection from", addr)
+		conn, user, addr = server_socket.accept()
+		print ("Connection from", addr, "Username:", user)
+		data = {"username": user, "id": get_id(conn)}
+		socketio.emit('user_joined', data)
 		#A thread shuts down itself after handling new client.
 		new_client_thread = threading.Thread(target = handle_new_client, args = (conn,addr,))
 		new_client_thread.start()
