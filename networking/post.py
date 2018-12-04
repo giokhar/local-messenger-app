@@ -25,7 +25,6 @@ def connected_sockets(username): # return a dictionary of connected hosts
 def send_message(current_sockets, host, username, message): # sends message from this host to the other
 	if not current_sockets.get(host, None): # check if this socket already exists
 		current_sockets = connected_sockets(username) # create new sockets
-	print(current_sockets)
 	my_socket = current_sockets.get(host)[1] # get socket from sockets dict where key=host, value=(username, socket)
 	my_socket.sendall(message.encode('utf-8')) # send message using this socket
 	if message == "exit":
