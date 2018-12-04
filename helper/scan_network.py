@@ -37,6 +37,6 @@ def conn_setup_with_available_hosts():
 			connect(next_host.decode('utf-8'))
 			print(next_host.decode('utf-8'))
 		except:
-			pass
+			print("Couldn't join host:", next_host)
 
 conn_setup_with_available_hosts()

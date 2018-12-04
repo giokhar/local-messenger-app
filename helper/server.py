@@ -14,7 +14,7 @@ def handle_new_client(conn, addr):
 	conn.close()
 
 def receive_new_message():
-	host = socket.gethostbyname(socket.gethostname())
+	host = (([ip for ip in socket.gethostbyname_ex(socket.gethostname())[2] if not ip.startswith("127.")] or [[(s.connect(("8.8.8.8", 53)), s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1]]) + ["no IP found"])[0]
 	print(host)
 	port = 50010
 	 
