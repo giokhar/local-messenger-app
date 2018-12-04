@@ -15,9 +15,6 @@
    <script type="text/javascript" src="static/js/materialize.min.js"></script>
    <script type="text/javascript" src="static/js/elastic.min.js"></script>
    <script type="text/javascript" src="static/js/main.js"></script>
-   <script type="text/javascript">
-      var username = "{{username}}"; // HIDDEN USERNAME
-   </script>
    <script type="text/javascript" src="static/js/custom.js"></script>
 </head>
 
@@ -73,7 +70,7 @@
          <!--Panel Tab menu FINISHED-->
          <!--Panel Tabs STARTED-->
          <div class="panel-col">
-               <!-- <div class="recent-user" id="102">
+               <div class="recent-user" id="102">
                   <div class="recent-avatar"><img src="static/img/1.jpg" class="a0uk" /></div>
                   <div class="chat-name-recent-message">
                      <div class="recent-user-name">Asuman</div>
@@ -89,7 +86,7 @@
                      <div class="recent-user-name">Sadenur</div>
                      <div class="recent-user-message">owwww! Nice picture..</div>
                   </div>
-               </div> -->
+               </div>
             <!-- <div id="recents" class="recents">
                <div class="recent-user">
                   <div class="status"></div>
@@ -234,7 +231,7 @@
                <div class="panel-chat-mobile-btn" data-activates="slide-out"></div>
                <div class="panel-chat-avatar"><img src="static/img/3.jpg" class="a0uk" /></div>
                <div class="panel-chat-username-status">
-                  <div class="panel-username" style="text-transform: capitalize;">Hello <b>{{ username }}</b> and Welcome to our Messenger App !</div>
+                  <div class="panel-username" style="text-transform: capitalize;">Hello <b id='username'>{{ username }}</b> and Welcome to our Messenger App !</div>
                   <!-- <div class="panel-status">Last seen today 17:43</div> -->
                </div>
             </div>
