@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template, redirect, url_for
 from flask_socketio import SocketIO
 from networking.post import send_message
+from networking.helper import get_ip_no_id
 
 app = Flask(__name__, static_url_path='/static')
 app.config['SECRET_KEY'] = 'NO_SECRET_KEY'
@@ -56,7 +57,9 @@ def leave():
 def handle_my_custom_event(data, methods=['GET', 'POST']):
     print(str(data)) # json object containing receiver's id (or ip) and the text
     socketio.emit('message_sent', data)
-    send_message("192.168.16.102", data['text'])
+    host = get_ip_no_id() + "." + str(data['id']) # get hosts ip from id coming from the browser
+    message = data['text'] # get the message from the browser
+    send_message(host, message) # networking.send_message
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True)
+	socketio.run(app, debug=True)

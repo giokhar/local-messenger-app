@@ -22,8 +22,3 @@ def active_ip_adresses(): # returns the list of ip adresses connected to the sam
 	output = subprocess.check_output(["awk", '/Up$/{print $2}'], stdin=process.stdout)
 	list_of_ip_addresses = [ip.decode('utf-8') for ip in output.split()] # decode each binary ip and convert to str
 	return list_of_ip_addresses # e.g. ['0.0.0.0', '0.0.0.1'...]
-
-print(get_my_ip())
-print(get_id())
-print(get_ip_no_id())
-print(get_ip_range())
