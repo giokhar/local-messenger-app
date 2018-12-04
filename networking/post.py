@@ -18,6 +18,7 @@ def connected_sockets(username): # return a dictionary of connected hosts
 			if host != my_ip: # create all sockets if not exist except my own
 				new_socket = create_socket(host, username) # create socket if possible
 				active_sockets[host] = (username, new_socket) # {'0.0.0.0':<socket>}
+				print(active_sockets)
 		except:
 			pass # skip if cannot connect to the host
 	return active_sockets # e.g. {'0.0.0.0':<socket1>, '0.0.0.1':<socket2>, ...}
