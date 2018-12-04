@@ -22,4 +22,12 @@ def connected_sockets(): # return a dictionary of connected hosts
 			pass # skip if cannot connect to the host
 	return active_sockets # e.g. {'0.0.0.0':<socket1>, '0.0.0.1':<socket2>, ...}
 
-print(connected_sockets())
+def send_message(host, message):
+	active_sockets = connected_sockets()
+	my_socket = active_sockets.get(host)
+	my_socket.sendall(message.encode('utf-8'))
+	if message == "exit":
+		my_socket.close()
+	return message
+
+print(send_message('192.168.16.102', "exit"))
