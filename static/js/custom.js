@@ -67,6 +67,11 @@ socket.on( 'user_left', function( data ) {
   $("#"+data.id).hide();
 });
 
+// When other users ask for my username
+socket.on( 'get_user', function() {
+  socket.emit( 'send_user', $('#username').text());
+});
+
 // When click username it will open the appropriate chatbox
 $(document).on('click', 'div.recent-user', function()
 {

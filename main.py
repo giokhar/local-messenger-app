@@ -65,6 +65,10 @@ def handle_my_custom_event(data, methods=['GET', 'POST']):
     message = data['text'] # get the message from the browser
     send_message(host, username, message) # networking.send_message
 
+@socketio.on('get_user')
+def get_my_username(username, methods=['GET', 'POST']):
+	return username
+
 if __name__ == '__main__':
 	run_app_thread = threading.Thread(target = socketio.run, args = (app,))
 	run_get_thread = threading.Thread(target = listener, args = (socketio,))
