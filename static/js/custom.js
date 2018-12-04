@@ -15,7 +15,7 @@ socket.on( 'connect', function() {
     e.preventDefault();
     socket.emit( 'my_event', {
       id : $('.reply').attr('id').replace("reply-", ""), // get the 'id' from 'reply-id'
-      user: $('#username').text(),
+      user: 'hai',
       text : $( '.reply' ).val() // get the text typed by the user
     })
   })
