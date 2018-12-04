@@ -27,7 +27,7 @@ def active_ip_adresses():
 def connect(host, port=50010):
 	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-	s.settimeout(0.1)
+	s.settimeout(0.2)
 	s.connect((host, port))
 	s.settimeout(None)
 
@@ -35,16 +35,18 @@ def connect(host, port=50010):
 	return s
 
 def conn_setup_with_available_hosts():
+	my_ip = get_my_ip()
 	ip_list = active_ip_adresses()
-	active_socket_list = []
-	for next_host in ip_list:
+	active_sockets = {}
+	for host in ip_list:
+		decoded_host = host.decode('utf-8')
 		try:
-			if get_my_ip() != next_host.decode('utf-8'):
-				new_socket = connect(next_host.decode('utf-8'))
-				active_socket_list.append(new_socket)
+			if  decoded_host != my_ip:
+				new_socket = connect(decoded_host)
+				active_sockets[decoded_host] = new_socket
 		except:
 			# pass when cannot connect to the next_host
 			pass
-	send_message.send_message_to(active_socket_list[0], "Rava xar")
+	print(active_sockets)
 
 conn_setup_with_available_hosts()
