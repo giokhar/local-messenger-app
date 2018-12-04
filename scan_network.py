@@ -29,5 +29,3 @@ def send_message(host, message):
 		my_socket.close()
 		print(my_socket)
 	return message
-
-print(send_message('192.168.16.102', "exit"))
