@@ -16,12 +16,12 @@ def get_ip_range():
 	return ip_range
 
 #Returns the list of ip adresses that are active and connected to the same router.
-#Using subprocess and nmap. Then parsing the values and moving them into the list.
+#Using subprocess and nmap. Then parsing the values, converting into str and moving them into the list.
 def active_ip_adresses():
 	ip_range = get_ip_range()
 	process = subprocess.Popen(("nmap", "-n","-sn", ip_range, "-oG", "-"), stdout=subprocess.PIPE)
 	output = subprocess.check_output(["awk", '/Up$/{print $2}'], stdin=process.stdout)
-	list_of_ip_addresses = output.split()
+	list_of_ip_addresses = [ip.decode('utf-8') for ip in output.split()] # decode within the list
 	return list_of_ip_addresses
 
 def connect(host, port=50010):
@@ -39,14 +39,14 @@ def conn_setup_with_available_hosts():
 	ip_list = active_ip_adresses()
 	active_sockets = {}
 	for host in ip_list:
-		decoded_host = host.decode('utf-8')
 		try:
-			if  decoded_host != my_ip:
+			if host != my_ip:
+				# create all sockets except my own
 				new_socket = connect(decoded_host)
 				active_sockets[decoded_host] = new_socket
 		except:
 			# pass when cannot connect to the next_host
 			pass
-	print(active_sockets)
+	return active_sockets
 
-conn_setup_with_available_hosts()
+print(active_ip_adresses())
