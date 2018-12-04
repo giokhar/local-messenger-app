@@ -15,11 +15,13 @@
    <script type="text/javascript" src="static/js/materialize.min.js"></script>
    <script type="text/javascript" src="static/js/elastic.min.js"></script>
    <script type="text/javascript" src="static/js/main.js"></script>
+   <script type="text/javascript">
+      var username = {{username}}; // HIDDEN USERNAME
+   </script>
    <script type="text/javascript" src="static/js/custom.js"></script>
 </head>
 
 <body style="background-color:#0094EA;">
-   <input type="hidden" id='username' value="{{username}}" /> <!--HIDDEN USERNAME-->
    <div class="chat-container">
       <!--Chat left FINISHED-->
       <div class="chat-left fixed" id="slide-out">

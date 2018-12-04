@@ -9,17 +9,16 @@ function messageTime(){
   // Function that returns the time message was received
   return new Date().getHours() + ":" + ('0'+new Date().getMinutes()).slice(-2); // get the current hour and minute in this format 00:00
 }
-$(document).ready(function(){
-  socket.on( 'connect', function() {
-    var form = $( 'form' ).on( 'submit', function( e ) { // when user sends a message invoke socketio for back-end
-      e.preventDefault();
-      socket.emit( 'my_event', {
-        id : $('.reply').attr('id').replace("reply-", ""), // get the 'id' from 'reply-id'
-        user: $('#username').val(),
-        text : $( '.reply' ).val() // get the text typed by the user
-      })
+
+socket.on( 'connect', function() {
+  var form = $( 'form' ).on( 'submit', function( e ) { // when user sends a message invoke socketio for back-end
+    e.preventDefault();
+    socket.emit( 'my_event', {
+      id : $('.reply').attr('id').replace("reply-", ""), // get the 'id' from 'reply-id'
+      user: $('#username').text(),
+      text : $( '.reply' ).val() // get the text typed by the user
     })
-  });
+  })
 });
 
 // // when user sends a message invoke socketio for front-end
