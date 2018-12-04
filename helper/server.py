@@ -1,5 +1,6 @@
 import socket
 import threading
+from scan_network import get_my_ip
 
 def handle_new_client(conn, addr):
 	while True:
@@ -14,7 +15,7 @@ def handle_new_client(conn, addr):
 	conn.close()
 
 def receive_new_message():
-	host = socket.gethostbyname(socket.gethostname())
+	host = get_my_ip() # method imported from scan_network
 	print(host)
 	port = 50010
 	 

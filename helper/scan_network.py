@@ -1,11 +1,15 @@
 import socket
 import subprocess
 import send_message
+
+def get_my_ip():
+	return (([ip for ip in socket.gethostbyname_ex(socket.gethostname())[2] if not ip.startswith("127.")] or [[(s.connect(("8.8.8.8", 53)), s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1]]) + ["no IP found"])[0]
+
 #Returns the range of the ip_addresses that have potential to be connected to the same router.
 def get_ip_range():
 	ip_range = ""
 	#Extracting OWN IP address
-	my_ip = (([ip for ip in socket.gethostbyname_ex(socket.gethostname())[2] if not ip.startswith("127.")] or [[(s.connect(("8.8.8.8", 53)), s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1]]) + ["no IP found"])[0]
+	my_ip = get_my_ip()
 	for i in my_ip.split('.')[0:3]:
 		ip_range += str(i)+"."
 	ip_range += "1-255"
