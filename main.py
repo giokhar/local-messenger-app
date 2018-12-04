@@ -69,4 +69,4 @@ if __name__ == '__main__':
 	run_app_thread = threading.Thread(target = socketio.run, args = (app,))
 	run_get_thread = threading.Thread(target = listener, args = (socketio,))
 	run_app_thread.start()
-	run_get_thread.start()
+	# run_get_thread.start()
