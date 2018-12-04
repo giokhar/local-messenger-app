@@ -16,12 +16,12 @@ def login():
 
 @app.route('/chat', methods=['GET', "POST"])
 def chat():
-	username = request.form['username'] # get the username from the POST form
-	sockets = connected_sockets(username) # print connected_sockets and pass username to all the devices
+	my_username = request.form['username'] # get the username from the POST form
+	sockets = connected_sockets(my_username, socketio) # print connected_sockets and pass username to all the devices
 	# for ip, user_socket in sockets.items():
 	# 	data = {"username": user_socket[0], "id": get_id(ip)}
 	# 	socketio.emit('user_joined', data)
-	return render_template('chat.html', username=username, run=set_users({'giorgi':'208'}))
+	return render_template('chat.html', username=username)
 
 @app.route('/logout')
 def logout():
@@ -68,6 +68,7 @@ def handle_my_custom_event(data, methods=['GET', 'POST']):
     message = data['text'] # get the message from the browser
     send_message(host, username, message) # networking.send_message
 
+@socketio.on('')
 def set_users(users): # dictionary of "username": "id"
 	for username, id in users.items():
 		data = {"username":username, "id":id}
