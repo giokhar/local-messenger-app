@@ -23,7 +23,7 @@ def active_ip_adresses():
 def connect(host):
 	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-	s.settimeout(1)
+	s.settimeout(0.1)
 	s.connect((host, port))
 	s.settimeout(None)
 
@@ -34,9 +34,8 @@ def conn_setup_with_available_hosts():
 	ip_list = active_ip_adresses()
 	for next_host in ip_list:
 		try:
-			connect(next_host.decode('utf-8'))
-			print(next_host.decode('utf-8'))
+			print("Trying to connect with ", next_host)
+			send_message.send_message_to(next_host.decode('utf-8'))
 		except:
-			print("Couldn't join host:", next_host)
-
+			print("conn refused with next_host ", next_host)
 conn_setup_with_available_hosts()
