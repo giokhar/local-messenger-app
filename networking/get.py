@@ -23,6 +23,7 @@ def listener(socketio, port=50010):
 	server_socket.listen(6)
 
 	while True:
+		print("Gio")
 		print(server_socket.accept())
 		conn, addr = server_socket.accept()
 		print ("Connection from", addr, "Username:", user)
