@@ -9,6 +9,7 @@ app = Flask(__name__, static_url_path='/static')
 app.config['SECRET_KEY'] = 'NO_SECRET_KEY'
 socketio = SocketIO(app)
 
+current_sockets = {}
 
 @app.route('/')
 def login():
@@ -16,8 +17,9 @@ def login():
 
 @app.route('/chat', methods=['GET', "POST"])
 def chat():
+	global current_sockets
 	username = request.form['username'] # get the username from the POST form
-	print(connected_sockets(username)) # print connected_sockets and pass username to all the devices
+	current_sockets = connected_sockets(username) # print connected_sockets and pass username to all the devices
 	return render_template('chat.html', username=username)
 
 @app.route('/logout')
@@ -58,12 +60,13 @@ def leave():
 
 @socketio.on('my_event') # invoked when user sends a message
 def handle_my_custom_event(data, methods=['GET', 'POST']):
+	global current_sockets
     print(str(data)) # json object containing receiver's id (or ip) and the text
     socketio.emit('message_sent', data)
     host = get_ip_no_id() + "." + str(data['id']) # get hosts ip from id coming from the browser
     username = data['user'] # get my username from front-end
     message = data['text'] # get the message from the browser
-    send_message(host, username, message) # networking.send_message
+    send_message(current_sockets, host, username, message) # networking.send_message
 
 if __name__ == '__main__':
 	run_app_thread = threading.Thread(target = socketio.run, args = (app,))

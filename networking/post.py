@@ -22,9 +22,10 @@ def connected_sockets(username): # return a dictionary of connected hosts
 			pass # skip if cannot connect to the host
 	return active_sockets # e.g. {'0.0.0.0':<socket1>, '0.0.0.1':<socket2>, ...}
 
-def send_message(host, username, message): # sends message from this host to the other
-	active_sockets = connected_sockets(username) # get all the active sockets again
-	my_socket = active_sockets.get(host)[1] # get socket from sockets dict where key=host, value=(username, socket)
+def send_message(current_sockets, host, username, message): # sends message from this host to the other
+	if not current_sockets.get(host, None): # check if this socket already exists
+		current_sockets = connected_sockets(username) # create new sockets
+	my_socket = current_sockets.get(host)[1] # get socket from sockets dict where key=host, value=(username, socket)
 	my_socket.sendall(message.encode('utf-8')) # send message using this socket
 	if message == "exit":
 		my_socket.close()
