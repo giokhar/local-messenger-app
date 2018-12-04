@@ -23,7 +23,7 @@ def listener(socketio, port=50010):
 	server_socket.listen(6)
 
 	while True:
-		new_socket, addr, user = server_socket.accept()
+		new_socket, (addr, user) = server_socket.accept()
 		print ("Connection from", addr, "Username:", user)
 		data = {"username": user, "id": get_id(addr)}
 		socketio.emit('user_joined', data)
