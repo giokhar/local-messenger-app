@@ -3,7 +3,16 @@ import socket
 # host = socket.gethostname()
 port = 50010
 
-def send_message_to(s, mess):
+def send_message_to(host):
+
+	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+	s.settimeout(0.1)
+	s.connect((host, port))
+	s.settimeout(None)
+
+	print("Connected to "+(host)+" on port "+str(port))
+
 	s.sendall(mess.encode('utf-8'))
 
 	s.close()
