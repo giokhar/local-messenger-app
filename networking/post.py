@@ -4,7 +4,7 @@ from networking import helper
 def create_socket(host, user, port=50010): # creates sockets if connection is possible in less than 0.2 seconds
 	new_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # create an empty socket
 	new_socket.settimeout(0.2) # if connection takes more than 0.2 seconds do not connect
-	new_socket.connect(((host, user), port)) # connect using this type ((host, user), port) tuple within the tuple
+	new_socket.connect((host, user, port)) # connect using this type ((host, user), port) tuple within the tuple
 	new_socket.settimeout(None)
 	return new_socket # e.g. <socket>
 
