@@ -2,13 +2,14 @@ import socket
 import threading
 from networking.helper import get_my_ip, get_id
 
-def handle_new_client(socket):
+def handle_new_client(socket, id, socketio):
 	while True:
 		data = socket.recv(1024)
 		if not data: break
 		dec_data = data.decode('utf-8')
 		print("Recieved: "+ dec_data)
-
+		my_data = {"id": id,"text": dec_data}
+		socketio.emit('message_received', my_data)
 		if dec_data == "exit":
 			break
 			
@@ -29,6 +30,6 @@ def listener(socketio, port=50010):
 		data = {"username": user, "id": get_id(addr[0])}
 		socketio.emit('user_joined', data)
 		#A thread shuts down itself after handling new client.
-		new_client_thread = threading.Thread(target = handle_new_client, args = (new_socket,))
+		new_client_thread = threading.Thread(target = handle_new_client, args = (new_socket, data['id'], socketio))
 		new_client_thread.start()
 	server_socket.close()
