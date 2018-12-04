@@ -14,7 +14,8 @@ def handle_new_client(conn, addr):
 	conn.close()
 
 def receive_new_message():
-	host = socket.gethostname()
+	host = socket.gethostbyname(socket.gethostname())
+	print(host)
 	port = 50010
 	 
 	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

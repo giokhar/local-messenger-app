@@ -11,11 +11,13 @@ def send_message_to(host):
 	while True:
 		initialMessage = input("Send: ")
 		s.sendall(initialMessage.encode('utf-8'))
-		if initalMessage == "exit":
+		if initialMessage == "exit":
 			break
 		#need to break when EXIT is entered
 
 	s.close()
+
+send_message_to("159.28.41.144")
 
 # def get_free_tcp_port():
 #     tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
