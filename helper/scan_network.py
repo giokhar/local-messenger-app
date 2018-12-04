@@ -39,7 +39,9 @@ def conn_setup_with_available_hosts():
 	active_socket_list = []
 	for next_host in ip_list:
 		try:
-			active_socket_list.append(connect(next_host.decode('utf-8')))
+			if get_my_ip() != next_host.decode('utf-8'):
+				new_socket = connect(next_host.decode('utf-8'))
+				active_socket_list.append(new_socket)
 		except:
 			# pass when cannot connect to the next_host
 			pass
