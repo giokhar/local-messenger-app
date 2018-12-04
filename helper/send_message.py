@@ -3,19 +3,12 @@ import socket
 # host = socket.gethostname()
 port = 50010
 
-def send_message_to(host):
+def send_message_to(active_socket, message):
 
-	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+	active_socket.sendall(message.encode('utf-8'))
 
-	s.settimeout(0.1)
-	s.connect((host, port))
-	s.settimeout(None)
-
-	print("Connected to "+(host)+" on port "+str(port))
-
-	s.sendall(mess.encode('utf-8'))
-
-	s.close()
+	if message == "exit":
+		s.close()
 
 #send_message_to("159.28.41.48")
 

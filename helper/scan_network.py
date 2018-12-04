@@ -24,7 +24,7 @@ def active_ip_adresses():
 	list_of_ip_addresses = output.split()
 	return list_of_ip_addresses
 
-def connect(host):
+def connect(host, port=50010):
 	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 	s.settimeout(0.1)
@@ -36,10 +36,13 @@ def connect(host):
 
 def conn_setup_with_available_hosts():
 	ip_list = active_ip_adresses()
+	active_socket_list = []
 	for next_host in ip_list:
 		try:
-			print("Trying to connect with ", next_host)
-			send_message.send_message_to(next_host.decode('utf-8'))
+			active_socket_list.append(connect(next_host.decode('utf-8')))
 		except:
-			print("conn refused with next_host ", next_host)
+			# pass when cannot connect to the next_host
+			pass
+	send_message.send_message_to(active_socket_list[0], "Rava xar")
+
 conn_setup_with_available_hosts()
