@@ -31,18 +31,3 @@ def receive_new_message():
 	s.close()
 
 receive_new_message()
-# host = socket.gethostname()
-# port = 50010
- 
-# s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-# s.bind((host, port))
-# s.listen(5)
-
-# while True:
-# 	conn, addr = s.accept()
-# 	print ("Connection from", addr)
-# 	#A thread shuts down itself after handling new client.
-# 	new_client_thread = threading.Thread(target = handle_new_client, args = (conn,addr,))
-# 	threads.append(new_client_thread)
-# 	new_client_thread.start()
-# s.close()

@@ -1,5 +1,6 @@
 import socket
 import subprocess
+import send_message
 #Returns the range of the ip_addresses that have potential to be connected to the same router.
 def get_ip_range():
 	ip_range = ""
@@ -18,3 +19,23 @@ def active_ip_adresses():
 	output = subprocess.check_output(["awk", '/Up$/{print $2}'], stdin=process.stdout)
 	list_of_ip_addresses = output.split()
 	return list_of_ip_addresses
+
+def connect(host):
+	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+	s.settimeout(0.1)
+	s.connect((host, port))
+	s.settimeout(None)
+
+	print("Connected to "+(host)+" on port "+str(port))
+	return s
+
+def conn_setup_with_available_hosts():
+	ip_list = active_ip_adresses()
+	for next_host in ip_list:
+		try:
+			print("Trying to connect with ", next_host)
+			send_message.send_message_to(next_host.decode('utf-8'))
+		except:
+			print("conn refused with next_host ", next_host)
+conn_setup_with_available_hosts()

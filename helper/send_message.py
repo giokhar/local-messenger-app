@@ -2,22 +2,13 @@ import socket
  
 # host = socket.gethostname()
 port = 50010
- 
-def send_message_to(host):
-	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-	s.connect((host, port))
-	print("Connected to "+(host)+" on port "+str(port))
 
-	while True:
-		initialMessage = input("Send: ")
-		s.sendall(initialMessage.encode('utf-8'))
-		if initialMessage == "exit":
-			break
-		#need to break when EXIT is entered
+def send_message_to(s, mess):
+	s.sendall(mess.encode('utf-8'))
 
 	s.close()
 
-send_message_to("159.28.41.144")
+#send_message_to("159.28.41.48")
 
 # def get_free_tcp_port():
 #     tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
