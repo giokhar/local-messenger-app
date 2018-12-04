@@ -5,7 +5,14 @@ def create_socket(host, my_username, socketio, port=50010): # creates sockets if
 	new_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # create an empty socket
 	new_socket.settimeout(0.2) # if connection takes more than 0.2 seconds do not connect
 	new_socket.connect((host, port)) # connect using this type (host, port) tuple
+	new_socket.sendall(my_username.encode('utf-8'));
 	new_socket.settimeout(None)
+
+	
+	# your_username = new_socket.recv(1024).decode('utf-8');
+	# data = {"username": your_username, "id": get_id(host)}
+	# socketio.emit('user_joined', data)
+
 	return new_socket # e.g. <socket>
 
 def connected_sockets(my_username, socketio): # return a dictionary of connected hosts
