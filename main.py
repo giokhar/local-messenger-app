@@ -1,7 +1,9 @@
 from flask import Flask, request, render_template, redirect, url_for
 from flask_socketio import SocketIO
 from networking.post import send_message
+from networking.get import listener
 from networking.helper import get_ip_no_id
+import threading
 
 app = Flask(__name__, static_url_path='/static')
 app.config['SECRET_KEY'] = 'NO_SECRET_KEY'
@@ -62,4 +64,7 @@ def handle_my_custom_event(data, methods=['GET', 'POST']):
     send_message(host, message) # networking.send_message
 
 if __name__ == '__main__':
-	socketio.run(app, debug=True)
+	run_app_thread = threading.Thread(target = socketio.run, args = (app,))
+	run_get_thread = threading.Thread(target = listener, args = (socketio,))
+	run_app_thread.start()
+	run_get_thread.start()
