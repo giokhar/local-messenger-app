@@ -28,8 +28,8 @@ def connected_sockets(my_username, socketio): # return a dictionary of connected
 			pass # skip if cannot connect to the host
 	return active_sockets # e.g. {'0.0.0.0':<socket1>, '0.0.0.1':<socket2>, ...}
 
-def send_message(host, my_username, message): # sends message from this host to the other
-	active_sockets = connected_sockets(my_username) # get all the active sockets again
+def send_message(host, my_username, message, socketio): # sends message from this host to the other
+	active_sockets = connected_sockets(my_username, socketio) # get all the active sockets again
 	my_socket = active_sockets.get(host)[1] # get socket from sockets dict where key=host, value=(username, socket)
 	my_socket.sendall(message.encode('utf-8')) # send message using this socket
 	if message == "exit":

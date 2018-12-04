@@ -63,7 +63,7 @@ def handle_my_custom_event(data, methods=['GET', 'POST']):
     host = get_ip_no_id() + "." + str(data['id']) # get hosts ip from id coming from the browser
     username = data['user'] # get my username from front-end
     message = data['text'] # get the message from the browser
-    send_message(host, username, message) # networking.send_message
+    send_message(host, username, message, socketio) # networking.send_message
 
 @socketio.on('')
 def set_users(users): # dictionary of "username": "id"
