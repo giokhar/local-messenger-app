@@ -28,7 +28,6 @@ def listener(socketio, port=50010):
 		user = new_socket.recv(1024).decode('utf-8');
 		data = {"username": user, "id": get_id(addr[0])}
 		socketio.emit('user_joined', data) # show new username in the browser
-		new_socket.sendall("Giorguna".encode('utf-8'))
 		#A thread shuts down itself after handling new client.
 		new_client_thread = threading.Thread(target = handle_new_client, args = (new_socket,))
 		new_client_thread.start()
