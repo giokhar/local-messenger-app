@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, redirect, url_for
 from flask_socketio import SocketIO
-import scan_network as back
+from networking.post import send_message
 
 app = Flask(__name__, static_url_path='/static')
 app.config['SECRET_KEY'] = 'NO_SECRET_KEY'
@@ -56,7 +56,7 @@ def leave():
 def handle_my_custom_event(data, methods=['GET', 'POST']):
     print(str(data)) # json object containing receiver's id (or ip) and the text
     socketio.emit('message_sent', data)
-    back.send_message("192.168.16.102", data['text'])
+    send_message("192.168.16.102", data['text'])
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)

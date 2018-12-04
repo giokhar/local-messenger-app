@@ -1,5 +1,5 @@
 import socket
-import helper
+from networking import helper
 
 def create_socket(host, port=50010): # creates sockets if connection is possible in less than 0.2 seconds
 	new_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # create an empty socket
