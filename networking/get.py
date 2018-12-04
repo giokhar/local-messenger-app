@@ -12,7 +12,7 @@ def handle_new_client(socket):
 		if dec_data == "exit":
 			break
 			
-	conn.close()
+	socket.close()
 
 def listener(socketio, port=50010):
 	host = get_my_ip() # method is imported from networking.helper
