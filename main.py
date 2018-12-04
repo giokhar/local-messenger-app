@@ -61,12 +61,12 @@ def leave():
 @socketio.on('my_event') # invoked when user sends a message
 def handle_my_custom_event(data, methods=['GET', 'POST']):
 	global current_sockets
-    print(str(data)) # json object containing receiver's id (or ip) and the text
-    socketio.emit('message_sent', data)
-    host = get_ip_no_id() + "." + str(data['id']) # get hosts ip from id coming from the browser
-    username = data['user'] # get my username from front-end
-    message = data['text'] # get the message from the browser
-    send_message(current_sockets, host, username, message) # networking.send_message
+	print(str(data)) # json object containing receiver's id (or ip) and the text
+	socketio.emit('message_sent', data)
+	host = get_ip_no_id() + "." + str(data['id']) # get hosts ip from id coming from the browser
+	username = data['user'] # get my username from front-end
+	message = data['text'] # get the message from the browser
+	send_message(current_sockets, host, username, message) # networking.send_message
 
 if __name__ == '__main__':
 	run_app_thread = threading.Thread(target = socketio.run, args = (app,))
