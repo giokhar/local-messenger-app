@@ -1,17 +1,31 @@
-import socket
-import threading
+import socket, threading
+from settings import current_sockets #current_sockets is a global variable
 from networking.helper import get_my_ip, get_id
 
-def handle_new_client(socket, id, user, socketio):
+def handle_new_client(socket, addr, socketio):
 	while True:
 		data = socket.recv(1024)
 		if not data: break
 		dec_data = data.decode('utf-8')
 		print("Recieved: "+ dec_data)
-		my_data = {"id": id, "user":user, "text": dec_data}
-		socketio.emit('message_received', my_data)
-		if dec_data == "exit":
+		message_type = int(dec_data[0])
+
+		id = get_id(addr[0])
+		if message_type == 0:#Connection Request
+
+			username = dec_data[1:] #if message type is 0, then the message contains only the username
+			my_data = {"id": id, "user": username, "text": dec_data}
+			socketio.emit('user_joined', my_data)
+
+		elif message_type == 1:#Disconnect Request
+			#need to remove host from the routing table
+			del current_sockets[host]
 			break
+		elif message_type == 2:#Regular message
+			message = dec_data[1:]
+			username = current_sockets[host][0] #BUG HERE! SHOULD BE USER FOR [0]
+			my_data = {"id": id, "user": username, "text": dec_data}
+			socketio.emit('message_received', my_data)
 			
 	socket.close()
 
@@ -26,10 +40,7 @@ def listener(socketio, port=50010):
 	while True:
 		new_socket, addr = server_socket.accept()
 		print ("Connection from", addr)
-		user = new_socket.recv(1024).decode('utf-8')
-		data = {"username": user, "id": get_id(addr[0])}
-		socketio.emit('user_joined', data)
 		#A thread shuts down itself after handling new client.
-		new_client_thread = threading.Thread(target = handle_new_client, args = (new_socket, data['id'], user, socketio))
+		new_client_thread = threading.Thread(target = handle_new_client, args = (new_socket, addr,socketio))
 		new_client_thread.start()
 	server_socket.close()

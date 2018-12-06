@@ -10,6 +10,7 @@ app.config['SECRET_KEY'] = 'NO_SECRET_KEY'
 socketio = SocketIO(app)
 
 current_sockets = {}
+username = ""
 
 @app.route('/')
 def login():
@@ -17,7 +18,7 @@ def login():
 
 @app.route('/chat', methods=['GET', "POST"])
 def chat():
-	global current_sockets
+	global current_sockets, username
 	username = request.form['username'] # get the username from the POST form
 	current_sockets = connected_sockets(username) # print connected_sockets and pass username to all the devices
 	return render_template('chat.html', username=username)
