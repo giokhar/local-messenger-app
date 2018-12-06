@@ -5,13 +5,14 @@ from networking.helper import get_my_ip, get_id
 def handle_new_client(socket, addr, socketio):
 	while True:
 		data = socket.recv(1024)
+		socket.sendall('ylifona'.encode('utf-8'))
 		if not data: break
 		dec_data = data.decode('utf-8')
 		print("Recieved: "+ dec_data)
 
 		message_type = int(dec_data[0])
 		id = get_id(addr[0])
-		if message_type == 0:#Connection Request
+		if message_type == 0:#Connection Request ####BUG HERE! INFINITE LOOP!
 			print(dec_data)
 			username = dec_data[1:] #if message type is 0, then the message contains only the username
 			my_data = {"id": id, "user": username, "text": dec_data}

@@ -7,6 +7,7 @@ def create_socket(host, port=50010): # creates sockets if connection is possible
 	new_socket.settimeout(1) # if connection takes more than 0.2 seconds do not connect
 	new_socket.connect((host, port)) # connect using this type (host, port) tuple
 	new_socket.settimeout(None)
+	new_socket.sendall(("0"+settings.my_username.encode('utf-8')))
 	return new_socket # e.g. <socket>
 
 #This function tries to connect with active hosts on the network. If it connects to it
@@ -18,8 +19,7 @@ def connected_sockets(): # return a dictionary of connected hosts
 		try:
 			if host != my_ip: # create all sockets if not exist except my own
 				new_socket = create_socket(host) # create socket if possible
-				print("hey")
-				new_socket.sendall(("0"+settings.my_username.encode('utf-8')))
+				##BUG _ need to add to conn_sockets
 		except:
 			pass # skip if cannot connect to the host
 
