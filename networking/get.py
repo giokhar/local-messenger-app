@@ -8,8 +8,8 @@ def handle_new_client(socket, addr, socketio):
 		if not data: break
 		dec_data = data.decode('utf-8')
 		print("Recieved: "+ dec_data)
-		message_type = int(dec_data[0])
 
+		message_type = int(dec_data[0])
 		id = get_id(addr[0])
 		if message_type == 0:#Connection Request
 			print(dec_data)
