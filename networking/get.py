@@ -12,7 +12,7 @@ def handle_new_client(socket, addr, socketio):
 
 		id = get_id(addr[0])
 		if message_type == 0:#Connection Request
-
+			print(dec_data)
 			username = dec_data[1:] #if message type is 0, then the message contains only the username
 			my_data = {"id": id, "user": username, "text": dec_data}
 			socketio.emit('user_joined', my_data)

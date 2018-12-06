@@ -56,6 +56,10 @@ def logout():
 # 	socketio.emit('user_left', data)
 # 	return "USER LEFT"
 
+def test():
+	settings.my_username = "Giorga"
+	settings.current_sockets = connected_sockets()
+
 @socketio.on('my_event') # invoked when user sends a message
 def handle_my_custom_event(data, methods=['GET', 'POST']):
 	print(str(data)) # json object containing receiver's id (or ip) and the text
@@ -66,7 +70,8 @@ def handle_my_custom_event(data, methods=['GET', 'POST']):
 
 if __name__ == '__main__':
 	settings.init() #Initializes the global variable
-	run_app_thread = threading.Thread(target = socketio.run, args = (app,))
+	# run_app_thread = threading.Thread(target = socketio.run, args = (app,))
+	run_app_thread = threading.Thread(target = test, args=(,))
 	run_get_thread = threading.Thread(target = listener, args = (socketio,))
 	run_app_thread.start()
 	run_get_thread.start()
