@@ -65,9 +65,8 @@ socket.on( 'user_rejoined', function( data ) {
 
 // When user leaves hide from the panel
 socket.on( 'user_left', function( data ) {
-  let id = data.id;
-  $("#"+id).remove();
-  $("#messages-body-"+id)).remove();
+  $("#"+data.id).remove();
+  $("#messages-body-"+data.id).remove();
 });
 
 // When click username it will open the appropriate chatbox
