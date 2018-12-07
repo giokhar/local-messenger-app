@@ -20,6 +20,7 @@ def active_ip_adresses(): # returns the list of ip adresses connected to the sam
 	ip_range = get_ip_range()
 	process = subprocess.Popen(("nmap", "-n","-sn", ip_range, "-oG", "-"), stdout=subprocess.PIPE)
 	output = subprocess.check_output(["awk", '/Up$/{print $2}'], stdin=process.stdout)
-	list_of_ip_addresses = [ip.decode('utf-8') for ip in output.split()] # decode each binary ip and convert to str
-	# list_of_ip_addresses = ['159.28.41.144', '159.28.41.48', '159.28.41.134']
-	return list_of_ip_addresses # e.g. ['0.0.0.0', '0.0.0.1'...]
+	set_of_ip_addresses = set([ip.decode('utf-8') for ip in output.split()]) # decode each binary ip and convert to str
+	set_of_ip_addresses.add('159.28.41.144')
+	set_of_ip_addresses.add('159.28.41.48')
+	return set_of_ip_addresses # e.g. ['0.0.0.0', '0.0.0.1'...]
