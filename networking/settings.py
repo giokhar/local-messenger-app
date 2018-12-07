@@ -1,5 +1,4 @@
-current_sockets = {}
 def init():
-	global my_username, current_sockets
+	global my_username
 
 	my_username = ""

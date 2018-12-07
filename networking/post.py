@@ -1,7 +1,6 @@
-import socket
+import socket, json
 from networking import settings
 from networking import helper
-import json
 
 def create_socket(host, port=50011): # creates sockets if connection is possible in less than 0.2 seconds
 	new_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # create an empty socket
@@ -29,4 +28,3 @@ def send_message(host, message_type, message=""):
 	new_socket.sendall(json.dumps(data).encode('utf-8')) # send json object converted to string and encoded
 	new_socket.close() # close current socket
 	return data
-
