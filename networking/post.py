@@ -21,7 +21,7 @@ def connected_sockets(): # return a dictionary of connected hosts
 			if host != my_ip: # create all sockets if not exist except my own
 				send_message(host, 0) # sending just the user name with message_type = 0
 		except:
-			print("Not", host) # skip if cannot connect to the host
+			pass # skip if cannot connect to the host
 
 def send_message(host, message_type, message=""):
 	data = {"username":settings.my_username,"message_type":str(message_type),"message":message}

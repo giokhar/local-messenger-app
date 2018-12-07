@@ -17,12 +17,12 @@ def handle_new_client(socket, host, socketio):
 	message = json_data['message']
 
 	if message_type == 0:#Connection Request with name
-		my_data = {"id": id, "user": username}
+		my_data = {"id": id, "username": username}
 		socketio.emit('user_joined', my_data)
 		send_message(host, 1, settings.my_username)
 
 	elif message_type == 1:#I don't need name sent back
-		my_data = {"id": id, "user": username}
+		my_data = {"id": id, "username": username}
 		socketio.emit('user_joined', my_data)
 
 	elif message_type == 2:#Disconnect Request
