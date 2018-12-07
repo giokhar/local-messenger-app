@@ -23,7 +23,7 @@ def handle_new_client(socket, host, socketio):
 
 	elif message_type == 1:#I don't need name sent back
 		my_data = {"id": id, "username": username}
-		socketio.emit('second_user_joined', my_data)
+		socketio.emit('user_joined', my_data)
 
 	elif message_type == 2:#Disconnect Request
 		my_data = {"id":id}
