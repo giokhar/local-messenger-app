@@ -16,23 +16,24 @@ def handle_new_client(socket, host, socketio):
 	message_type = int(json_data['message_type'])
 	message = json_data['message']
 
-	if message_type == 0:#Connection Request with name
-		my_data = {"id": id, "username": username}
-		socketio.emit('user_joined', my_data)
-		send_message(host, 1, settings.my_username)
+	if username:
+		if message_type == 0:#Connection Request with name
+			my_data = {"id": id, "username": username}
+			socketio.emit('user_joined', my_data)
+			send_message(host, 1, settings.my_username)
 
-	elif message_type == 1:#I don't need name sent back
-		my_data = {"id": id, "username": username}
-		time.sleep(2) # delay to wait for browser to load
-		socketio.emit('user_joined', my_data)
+		elif message_type == 1:#I don't need name sent back
+			my_data = {"id": id, "username": username}
+			time.sleep(2) # delay to wait for browser to load
+			socketio.emit('user_joined', my_data)
 
-	elif message_type == 2:#Disconnect Request
-		my_data = {"id":id}
-		socketio.emit("user_left", my_data)
+		elif message_type == 2:#Disconnect Request
+			my_data = {"id":id}
+			socketio.emit("user_left", my_data)
 
-	elif message_type == 3:#Regular message
-		my_data = {"id": id, "user": username, "text": message}
-		socketio.emit('message_received', my_data)
+		elif message_type == 3:#Regular message
+			my_data = {"id": id, "user": username, "text": message}
+			socketio.emit('message_received', my_data)
 			
 	socket.close()
 
