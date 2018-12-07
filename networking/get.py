@@ -2,46 +2,37 @@ import socket, threading
 from networking import settings
 from networking.helper import get_my_ip, get_id
 from networking.post import create_socket, send_message
+import json, time
 
 def handle_new_client(socket, host, socketio):
-	while True:
-		data = socket.recv(1024)
 
-		if not data: break
-		dec_data = data.decode('utf-8')
-		print("Recieved: "+ dec_data)
+	data = socket.recv(1024)
 
-		message_type = int(dec_data[0])
-		id = get_id(host)
+	json_data = json.loads(data.decode('utf-8')) # {"host", "username", "message_type", "message"}
+	print("Recieved: ",json_data)
 
+	id = get_id(host)
+	username = json_data['username']
+	message_type = int(json_data['message_type'])
+	message = json_data['message']
+
+	if username:
 		if message_type == 0:#Connection Request with name
-
-			username = dec_data[1:] #if message type is 0, then the message contains only the username
-			my_data = {"id": id, "user": username, "text": dec_data[1:]}
+			my_data = {"id": id, "username": username}
 			socketio.emit('user_joined', my_data)
-
-			send_socket = create_socket(host)
-			settings.current_sockets[host] = [username, send_socket]
-
 			send_message(host, 1, settings.my_username)
 
-		elif message_type == 1:#I don't need name back
-			username = dec_data[1:]
-			# settings.current_sockets[host][0] = username
-			settings.current_sockets[host] = [username, settings.current_sockets[host][1]]
-			my_data = {"id": id, "user": username, "text": dec_data[1:]}
+		elif message_type == 1:#I don't need name sent back
+			my_data = {"id": id, "username": username}
+			time.sleep(2) # delay to wait for browser to load
 			socketio.emit('user_joined', my_data)
 
 		elif message_type == 2:#Disconnect Request
-			#need to remove host from the routing table
-			del settings.current_sockets[host]
-			break
+			my_data = {"id":id}
+			socketio.emit("user_left", my_data)
 
 		elif message_type == 3:#Regular message
-
-			message = dec_data[1:]
-			username = settings.current_sockets[host][0]
-			my_data = {"id": id, "user": username, "text": dec_data[1:]}
+			my_data = {"id": id, "user": username, "text": message}
 			socketio.emit('message_received', my_data)
 			
 	socket.close()
@@ -58,6 +49,6 @@ def listener(socketio, port=50011):
 		new_socket, addr = server_socket.accept()
 		print ("Connection from", addr)
 		#A thread shuts down itself after handling new client.
-		new_client_thread = threading.Thread(target = handle_new_client, args = (new_socket, addr[0],socketio))
+		new_client_thread = threading.Thread(target = handle_new_client, args = (new_socket, addr[0], socketio))
 		new_client_thread.start()
 	server_socket.close()

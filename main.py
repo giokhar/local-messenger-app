@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, redirect, url_for
 from flask_socketio import SocketIO
-from networking.post import send_message,connected_sockets
+from networking.post import send_message, broadcast
 from networking.get import listener
 from networking.helper import get_ip_no_id, get_id, active_ip_adresses
 from networking import settings
@@ -17,12 +17,15 @@ def login():
 @app.route('/chat', methods=['GET', "POST"])
 def chat():
 	settings.my_username = request.form['username'] # get the username from the POST form
-	connected_sockets() # print connected_sockets and pass username to all the devices
+	while settings.my_username:
+		broadcast(0) # connect to everyone
+		break
 	return render_template('chat.html', username=settings.my_username)
 
 @app.route('/logout')
 def logout():
 	# send the server that you left and redirect to the url
+	broadcast(2) # disconnect from everyone
 	return redirect(url_for('login'))
 
 
@@ -55,10 +58,6 @@ def logout():
 # 	data = {"id": request.args['id']}
 # 	socketio.emit('user_left', data)
 # 	return "USER LEFT"
-
-# def test():
-# 	settings.my_username = "Davit"
-# 	connected_sockets()
 
 @socketio.on('my_event') # invoked when user sends a message
 def handle_my_custom_event(data, methods=['GET', 'POST']):
