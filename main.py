@@ -58,7 +58,7 @@ def logout():
 
 def test():
 	settings.my_username = "Davit"
-	#settings.current_sockets = connected_sockets()
+	connected_sockets()
 
 @socketio.on('my_event') # invoked when user sends a message
 def handle_my_custom_event(data, methods=['GET', 'POST']):

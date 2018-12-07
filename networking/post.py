@@ -2,7 +2,7 @@ import socket
 from networking import settings
 from networking import helper
 
-def create_socket(host, port=50010): # creates sockets if connection is possible in less than 0.2 seconds
+def create_socket(host, port=50011): # creates sockets if connection is possible in less than 0.2 seconds
 	new_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # create an empty socket
 	new_socket.settimeout(1) # if connection takes more than 0.2 seconds do not connect
 	new_socket.connect((host, port)) # connect using this type (host, port) tuple
@@ -19,10 +19,11 @@ def connected_sockets(): # return a dictionary of connected hosts
 	for host in ip_list: # iterate over active ips
 		try:
 			if host != my_ip: # create all sockets if not exist except my own
-				new_socket = create_socket(host) # create socket if possible
-				settings.current_sockets[host] = (new_socket, "")
-				send_message(host, 2, "davit")
-				##BUG _ need to add to conn_sockets
+				if not settings.current_sockets.get(host, None):
+					new_socket = create_socket(host) # create socket if possible
+					settings.current_sockets[host] = ("", new_socket)
+					send_message(host, 0, settings.my_username)
+
 				#If host is already in current sockets then don't add them
 		except:
 			pass # skip if cannot connect to the host
@@ -35,4 +36,3 @@ def send_message(host,mess_type, message): # sends message from this host to the
 	if mess_type == 1:
 		my_socket.close()
 		del settings.current_sockets[host]
-	return message
