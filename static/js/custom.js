@@ -46,26 +46,18 @@ socket.on( 'message_received', function( data ) {
   $('.messages--wrap').scrollTop(Number.MAX_SAFE_INTEGER) // Always scroll down when message sent
 });
 
-
-// When user joins it add to the panel on the left
-socket.on( 'user_joined', function( data ) {
-  let default_message = "I just joined the network"; // default message shown on the panel when user joins
-  let icon = "static/img/2.jpg";
-  $( 'div.panel-col' ).append( '<div class="recent-user" id="'+data.id+'"><div class="recent-avatar"><img src="'+icon+'" class="a0uk"></div><div class="chat-name-recent-message"><div class="recent-user-name">'+data.username+'</div><div class="recent-user-message">'+default_message+'</div></div><div class="message-count"></div></div>' ) // append new avatar and user info when new use joins
-  $( 'div.messages--wrap').append( $('<div class="messages-body" id="messages-body-'+data.id+'"></div>').hide()) // hide the created chatroom body by default
-  $("#"+data.id).find('.recent-user-name').css("font-weight", "700"); // bold the opened username
-  $("#"+data.id).find('.recent-user-message').css("font-weight", "700"); // bold the opened message
+$(document).ready(function(){
+  // When user joins it add to the panel on the left
+  socket.on( 'user_joined', function( data ) {
+    let default_message = "I just joined the network"; // default message shown on the panel when user joins
+    let icon = "static/img/2.jpg";
+    $( 'div.panel-col' ).append( '<div class="recent-user" id="'+data.id+'"><div class="recent-avatar"><img src="'+icon+'" class="a0uk"></div><div class="chat-name-recent-message"><div class="recent-user-name">'+data.username+'</div><div class="recent-user-message">'+default_message+'</div></div><div class="message-count"></div></div>' ) // append new avatar and user info when new use joins
+    $( 'div.messages--wrap').append( $('<div class="messages-body" id="messages-body-'+data.id+'"></div>').hide()) // hide the created chatroom body by default
+    $("#"+data.id).find('.recent-user-name').css("font-weight", "700"); // bold the opened username
+    $("#"+data.id).find('.recent-user-message').css("font-weight", "700"); // bold the opened message
+  });
 });
 
-// When user joins it add to the panel on the left
-socket.on( 'second_user_joined', function( data ) {
-  let default_message = "I just joined the network"; // default message shown on the panel when user joins
-  let icon = "static/img/2.jpg";
-  $( 'div.panel-col' ).append( '<div class="recent-user" id="'+data.id+'"><div class="recent-avatar"><img src="'+icon+'" class="a0uk"></div><div class="chat-name-recent-message"><div class="recent-user-name">'+data.username+'</div><div class="recent-user-message">'+default_message+'</div></div><div class="message-count"></div></div>' ) // append new avatar and user info when new use joins
-  $( 'div.messages--wrap').append( $('<div class="messages-body" id="messages-body-'+data.id+'"></div>').hide()) // hide the created chatroom body by default
-  $("#"+data.id).find('.recent-user-name').css("font-weight", "700"); // bold the opened username
-  $("#"+data.id).find('.recent-user-message').css("font-weight", "700"); // bold the opened message
-});
 
 // When user rejoins show again in the panel
 socket.on( 'user_rejoined', function( data ) {
