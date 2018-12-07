@@ -67,6 +67,7 @@ socket.on( 'user_rejoined', function( data ) {
 socket.on( 'user_left', function( data ) {
   $("#"+data.id).remove();
   $("#messages-body-"+data.id).remove();
+  $('div.panel-username').text("Unfortunately, all users left this chatroom!");
 });
 
 // When click username it will open the appropriate chatbox
