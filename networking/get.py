@@ -1,5 +1,6 @@
 import socket, threading
 from networking import settings
+from 
 from networking.helper import get_my_ip, get_id
 
 def handle_new_client(socket, addr, socketio):
@@ -17,8 +18,9 @@ def handle_new_client(socket, addr, socketio):
 			username = dec_data[1:] #if message type is 0, then the message contains only the username
 			my_data = {"id": id, "user": username, "text": dec_data}
 			socketio.emit('user_joined', my_data)
-			socket.sendall(("0"+ settings.my_username).encode('utf-8'))
-			settings.current_sockets[addr[0]] = (username, socket)
+			#settings.current_sockets[addr[0]] = (username, socket)
+			#socket.sendall(("0"+ settings.my_username).encode('utf-8'))
+			#print(settings.current_sockets)
 
 		elif message_type == 1:#Disconnect Request
 			#need to remove host from the routing table
