@@ -24,7 +24,7 @@ def connected_sockets(): # return a dictionary of connected hosts
 			print("Not", host) # skip if cannot connect to the host
 
 def send_message(host, message_type, message=""):
-	data = {"username":settings.my_username,"message_type":str(message_type),"message":message_type}
+	data = {"username":settings.my_username,"message_type":str(message_type),"message":message}
 	new_socket = create_socket(host) # create socket to send a message to the given ip address
 	new_socket.sendall(json.dumps(data).encode('utf-8')) # send json object converted to string and encoded
 	new_socket.close() # close current socket
