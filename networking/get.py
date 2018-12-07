@@ -17,7 +17,7 @@ def handle_new_client(socket, host, socketio):
 		if message_type == 0:#Connection Request with name
 
 			username = dec_data[1:] #if message type is 0, then the message contains only the username
-			my_data = {"id": id, "user": username, "text": dec_data}
+			my_data = {"id": id, "user": username, "text": dec_data[1:]}
 			socketio.emit('user_joined', my_data)
 
 			send_socket = create_socket(host)
@@ -28,6 +28,8 @@ def handle_new_client(socket, host, socketio):
 		elif message_type == 1:#I don't need name back
 			username = dec_data[1:]
 			settings.current_sockets[host][0] = username
+			my_data = {"id": id, "user": username, "text": dec_data[1:]}
+			socketio.emit('user_joined', my_data)
 
 		elif message_type == 2:#Disconnect Request
 			#need to remove host from the routing table
@@ -38,7 +40,7 @@ def handle_new_client(socket, host, socketio):
 
 			message = dec_data[1:]
 			username = settings.current_sockets[host][0]
-			my_data = {"id": id, "user": username, "text": dec_data}
+			my_data = {"id": id, "user": username, "text": dec_data[1:]}
 			socketio.emit('message_received', my_data)
 			
 	socket.close()

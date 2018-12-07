@@ -17,7 +17,7 @@ def login():
 @app.route('/chat', methods=['GET', "POST"])
 def chat():
 	settings.my_username = request.form['username'] # get the username from the POST form
-	settings.current_sockets = connected_sockets() # print connected_sockets and pass username to all the devices
+	connected_sockets() # print connected_sockets and pass username to all the devices
 	return render_template('chat.html', username=settings.my_username)
 
 @app.route('/logout')
@@ -56,9 +56,9 @@ def logout():
 # 	socketio.emit('user_left', data)
 # 	return "USER LEFT"
 
-def test():
-	settings.my_username = "Davit"
-	connected_sockets()
+# def test():
+# 	settings.my_username = "Davit"
+# 	connected_sockets()
 
 @socketio.on('my_event') # invoked when user sends a message
 def handle_my_custom_event(data, methods=['GET', 'POST']):
@@ -70,8 +70,7 @@ def handle_my_custom_event(data, methods=['GET', 'POST']):
 
 if __name__ == '__main__':
 	settings.init() #Initializes the global variable
-	# run_app_thread = threading.Thread(target = socketio.run, args = (app,))
-	run_app_thread = threading.Thread(target = test)
+	run_app_thread = threading.Thread(target = socketio.run, args = (app,))
 	run_get_thread = threading.Thread(target = listener, args = (socketio,))
 	run_app_thread.start()
 	run_get_thread.start()
