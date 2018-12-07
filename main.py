@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, redirect, url_for
 from flask_socketio import SocketIO
-from networking.post import send_message,connected_sockets
+from networking.post import send_message, connected_sockets
 from networking.get import listener
 from networking.helper import get_ip_no_id, get_id, active_ip_adresses
 from networking import settings
@@ -23,6 +23,7 @@ def chat():
 @app.route('/logout')
 def logout():
 	# send the server that you left and redirect to the url
+
 	return redirect(url_for('login'))
 
 
