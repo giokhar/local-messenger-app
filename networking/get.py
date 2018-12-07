@@ -9,7 +9,7 @@ def handle_new_client(socket, host, socketio):
 	data = socket.recv(1024)
 
 	json_data = json.loads(data.decode('utf-8')) # {"host", "username", "message_type", "message"}
-	print("Recieved: "+ json_data)
+	print("Recieved: ",json_data)
 
 	id = get_id(host)
 	username = json_data['username']
