@@ -21,10 +21,8 @@ def connected_sockets(): # return a dictionary of connected hosts
 			if host != my_ip: # create all sockets if not exist except my own
 				if not settings.current_sockets.get(host, None):
 					new_socket = create_socket(host) # create socket if possible
-					settings.current_sockets[host] = ("", new_socket)
+					settings.current_sockets[host] = ["", new_socket]
 					send_message(host, 0, settings.my_username)
-
-				#If host is already in current sockets then don't add them
 		except:
 			pass # skip if cannot connect to the host
 

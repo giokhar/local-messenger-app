@@ -21,9 +21,9 @@ def handle_new_client(socket, host, socketio):
 			socketio.emit('user_joined', my_data)
 
 			send_socket = create_socket(host)
+			settings.current_sockets[host] = [username, send_socket]
+
 			send_message(host, 1, settings.my_username)
-			#____________________
-			settings.current_sockets[host] = (username, send_socket)# none instead of socket
 
 		elif message_type == 1:#I don't need name back
 			username = dec_data[1:]
@@ -37,7 +37,7 @@ def handle_new_client(socket, host, socketio):
 		elif message_type == 3:#Regular message
 
 			message = dec_data[1:]
-			username = settings.current_sockets[host][0] #BUG HERE! SHOULD BE USER FOR [0]
+			username = settings.current_sockets[host][0]
 			my_data = {"id": id, "user": username, "text": dec_data}
 			socketio.emit('message_received', my_data)
 			
