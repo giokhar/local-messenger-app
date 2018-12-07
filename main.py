@@ -17,7 +17,7 @@ def login():
 @app.route('/chat', methods=['GET', "POST"])
 def chat():
 	settings.my_username = request.form['username'] # get the username from the POST form
-	connected_sockets(setting.current_sockets) # print connected_sockets and pass username to all the devices
+	connected_sockets(settings.current_sockets) # print connected_sockets and pass username to all the devices
 	return render_template('chat.html', username=settings.my_username)
 
 @app.route('/logout')
