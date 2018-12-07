@@ -13,7 +13,7 @@ def handle_new_client(socket, host, socketio):
 
 	id = get_id(host)
 	username = json_data['username']
-	message_type = json_data['message_type']
+	message_type = int(json_data['message_type'])
 	message = json_data['message']
 
 	if message_type == 0:#Connection Request with name
