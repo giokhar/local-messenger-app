@@ -2,6 +2,7 @@ import socket, threading
 from networking import settings
 from networking.helper import get_my_ip, get_id
 from networking.post import create_socket, send_message
+import json
 
 def handle_new_client(socket, host, socketio):
 
