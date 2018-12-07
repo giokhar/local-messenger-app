@@ -66,7 +66,7 @@ def handle_my_custom_event(data, methods=['GET', 'POST']):
 	socketio.emit('message_sent', data)
 	host = get_ip_no_id() + "." + str(data['id']) # get hosts ip from id coming from the browser
 	message = data['text'] # get the message from the browser
-	send_message(host, 2, message) # networking.send_message
+	send_message(host, 3, message) # networking.send_message
 
 if __name__ == '__main__':
 	settings.init() #Initializes the global variable
