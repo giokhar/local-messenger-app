@@ -2,7 +2,7 @@ import socket, threading
 from networking import settings
 from networking.helper import get_my_ip, get_id
 from networking.post import create_socket, send_message
-import json
+import json, time
 
 def handle_new_client(socket, host, socketio):
 
@@ -23,6 +23,7 @@ def handle_new_client(socket, host, socketio):
 
 	elif message_type == 1:#I don't need name sent back
 		my_data = {"id": id, "username": username}
+		time.sleep(2) # delay to wait for browser to load
 		socketio.emit('user_joined', my_data)
 
 	elif message_type == 2:#Disconnect Request

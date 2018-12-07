@@ -12,16 +12,16 @@ def create_socket(host, port=50011): # creates sockets if connection is possible
 
 #This function tries to connect with active hosts on the network. If it connects to it
 #then it sends the name as a first message and connection request.  
-def connected_sockets(): # return a dictionary of connected hosts
+def broadcast(message_type):
 	my_ip = helper.get_my_ip() # get my ip from the helper
 	ip_list = helper.active_ip_adresses() # get a list of active ip addresses
-	print(ip_list)
 	for host in ip_list: # iterate over active ips
 		try:
 			if host != my_ip: # create all sockets if not exist except my own
-				send_message(host, 0) # sending just the user name with message_type = 0
+				send_message(host, message_type) # sending just the user name with message_type = 0
 		except:
 			pass # skip if cannot connect to the host
+
 
 def send_message(host, message_type, message=""):
 	data = {"username":settings.my_username,"message_type":str(message_type),"message":message}
