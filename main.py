@@ -17,7 +17,9 @@ def login():
 @app.route('/chat', methods=['GET', "POST"])
 def chat():
 	settings.my_username = request.form['username'] # get the username from the POST form
-	broadcast(0) # conenct to everyone
+	while settings.my_username:
+		broadcast(0) # connect to everyone
+		break
 	return render_template('chat.html', username=settings.my_username)
 
 @app.route('/logout')
